@@ -1,8 +1,13 @@
 
 # Introduction
 
-This project was build as a capstone project for my SQL course on my hourney to become a data analyst in order to demonstrate my skills in writing queries to abtain information of databases. 
-The main goal of this project is to annalyze the top paying jobs for Data Analyst, skills in high demand and their average salary, and where high demands meets high salary. 
+This capstone project is part of my journey to becoming a data analyst, developed during my SQL course. 
+The main goal is to show my skills in writing SQL queries to pull and analyze data from databases. 
+In this project, I focus on finding the top-paying jobs for Data Analysts, figuring out which skills are in high demand,
+calculating the average salaries for these skills, and discovering where high demand meets high salary. 
+I hope to provide valuable insights into the Data Analyst job market, highlighting the skills that offer the best financial rewards.
+
+
 SQL Queries? Check them out here : [project_sql folder](/sql_load/)
 
 # Background
@@ -29,15 +34,14 @@ In this project, I utilized a variety of tools to conduct my analysis:
 
 # Analysis
 
-Each query for this project aimed at investigating specific aspects of the data analyst job market. Here’s how I approached each question:
-
 - 1-  Identify the top 10 highest-paying Data Analyst roles that are available remotely. 
 
-To identify the top 10 paying jobs in the tables availables, I used Left Join to returns all records from the left table (job_postings_fact), and the matching rows from the right table (company_dim) through the common row job_id.
-I specified that I wanted only remote positions for data analyst role, and also to not show me NULL results
-I also wanted to know what companies are offering these positions so I added on my SELECT section the name of them
+To identify the top 10 highest-paying jobs from the available tables, I used a LEFT JOIN to return all records from the left table (job_postings_fact)
+ and the matching rows from the right table (company_dim) based on the common column job_id. I filtered the results to include only 
+ remote positions for Data Analysts and excluded any rows with NULL values. Additionally, I included the company names offering these positions in the SELECT clause.
 
-```sql
+
+ ```sql
 -- Top 10 paying Data Analyst role
 SELECT
     job_postings_fact.job_id,
@@ -63,8 +67,10 @@ LIMIT 10
 
 - 2- What are the top-paying data analyst jobs, and what skills are required?
 
-In this query I used a CTE to reference results from Query 1, creating a temporary table called 'top_paying_jobs' .
-Then in the main query I find the skills required for the top 10 paying jobs. 
+In this query, I used a CTE (Common Table Expression) to reference the results from Query 1,
+ creating a temporary table called 'top_paying_jobs'. In the main query, I then extracted the skills 
+ required for the top 10 highest-paying jobs.
+
 ```SQL
 -- Getting the top 10 paying Data Analyst jobs
 WITH top_paying_jobs AS(
@@ -113,7 +119,8 @@ Note: this tabbles are jus the the 5 first jobs
 
 - 3- What skills are most in demand for data analysts?
 
-To get what jobs are in high demand, I had to count how many times the skills appears on the skills row. 
+To identify the jobs that are in high demand, I counted the frequency of each 
+skill listed in the skills column. Then, I grouped the results by skill to consolidate the data.
 
 
 ``` SQL
@@ -138,9 +145,10 @@ LIMIT 10
 
 - 4-Which skills are associated with higher salaries?
 
-Query number 4 main goal is to associate skills with high salaries.
-So I INNER JOIN skills_job_dim on job_posting_facts through 'job_id' row,to match skills with the salaries for each position
-Then took the avg of the salaries for data analyst, excluing NULL values.
+The main goal of Query 4 is to associate skills with high salaries. To achieve this,
+I performed an INNER JOIN between the skills_job_dim and job_posting_facts tables using the 
+'job_id' column to match skills with the salaries for each position. Then, I calculated the 
+average salaries for Data Analyst roles, excluding NULL values.
 ``` SQL
 -- Skills associated with higher salaries
 SELECT
@@ -169,8 +177,10 @@ LIMIT 10
 
 - 5-What are the most optimal skills to learn (aka it’s in high demand and a high-paying skill) for a data analyst?
 
-Query number 5, the strategy is to cross results of query number 3,What skills are most in demand, and query 4, Which skills are associated with higher salaries. 
-I started by selecting rows I needed, and counting how many jobs there were available,
+In Query 5, the strategy is to combine the results of Query 3 (which identifies the most in-demand skills) and Query 4
+(which associates skills with higher salaries). I could have used both with CTE function, 
+but I opt for a shorter query, which gave me the results I was looking for. 
+
 ``` SQL
 SELECT
     skills_dim.skill_id,
@@ -200,3 +210,31 @@ ORDER BY salary_year_avg DESC
 ```
 ![alt text](<Asset/5.1.png>)
 ![alt text](<Asset/5.2.png>)
+
+# What I learned
+
+Through my journey with the SQL for Data Analytics certificate by Luke Barousse, I've learned everything from basic operations to advanced features in SQL, including:
+
+- **Features**: Comparison, operations, aggregation, and JOIN.
+- **Data Cleaning**: How to exclude NULL values.
+- **Data Manipulation**: How to create databases.
+- **Database Loading**: Loading a database using PostgreSQL and VSCode.
+- **Complex Query Construction**: Building advanced SQL queries that combine multiple tables.
+
+
+# Conclusion
+### Insights
+- A Data Analyst can earn up to 650,000 per year.
+- High-demand skills include SQL, Excel, Python, Tableau, and Power BI.
+- Skills associated with higher salaries are PySpark, Bitbucket, Watson, Couchbase, and DataRobot.
+- Skills that combine high demand with higher salaries include SQL, Excel, Python, Tableau, and R.
+
+
+### Closing Toughts
+
+This project significantly enhanced my SQL abilities and provided valuable insights into the Data Analytics 
+job market. It not only taught me how to code and construct queries but also developed my critical and analytical 
+thinking skills. I learned how to approach problems effectively and leverage data to drive better results. 
+As this project fueled my growing interest in data analysis, I am becoming more confident in my SQL skills and 
+motivated to deepen my knowledge further on my path to becoming a Data Analyst.
+
